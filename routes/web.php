@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\MultiUserController;
+use App\Http\Middleware\RoleMiddleware;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -14,8 +15,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 });
 
-Route::get('/admin/users', [MultiUserController::class,'admin'])->name('admin');
-Route::get('/superadmin/system', [MultiUserController::class,'superadmin'])->name('superadmin');
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('/admin/users', [MultiUserController::class,'admin'])->name('admin');
+});
+
+Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
+    Route::get('/superadmin/system', [MultiUserController::class,'superadmin'])->name('superadmin');
+});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
