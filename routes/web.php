@@ -21,6 +21,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:superadmin'])->group(function () {
     Route::get('/superadmin/system', [MultiUserController::class,'superadmin'])->name('superadmin');
+    Route::get('/superadmin/{user}/edit', [MultiUserController::class, 'edit'])->name('edit');
+    Route::put('/superadmin/{user}', [MultiUserController::class, 'update'])->name('update');
 });
 
 require __DIR__.'/settings.php';

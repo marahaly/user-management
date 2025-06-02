@@ -33,7 +33,7 @@ export function AppSidebar() {
         {
             title: 'Super Admin',
             href: '/superadmin/system',
-            icon: LayoutGrid,
+            icon: Settings,
         },
     ];
 
